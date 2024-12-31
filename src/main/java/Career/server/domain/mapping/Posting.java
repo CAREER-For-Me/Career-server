@@ -44,6 +44,8 @@ public class Posting extends BaseEntity {
 
     private String position;
 
+    private Integer views;
+
     private String content;
 
 }
