@@ -1,6 +1,6 @@
 package Career.server.web.controller;
 
-public class MemberController {
+public class UserController {
     /*
     Controller 가 들어가야 하는 부분
      */
