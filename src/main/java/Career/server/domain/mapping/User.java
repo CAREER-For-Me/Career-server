@@ -7,6 +7,9 @@ import Career.server.domain.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -34,6 +37,8 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private UserStatus userstatus;
+
+    private LocalDateTime inactivedAt;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
