@@ -38,6 +38,14 @@ public class Posting extends BaseEntity {
 
     private String homepageUrl;
 
+    private LocalDate startAct;
+
+    private LocalDate endAct;
+
+    private String personnel;
+
+    private String boon;
+
     private String area;
 
     private String salary;
@@ -47,5 +55,7 @@ public class Posting extends BaseEntity {
     private Integer views;
 
     private String content;
+
+    private Boolean mark;
 
 }
