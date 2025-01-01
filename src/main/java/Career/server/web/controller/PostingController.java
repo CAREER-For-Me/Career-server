@@ -6,10 +6,7 @@ import Career.server.apiPayload.ApiResponse;
 import Career.server.service.PostingService;
 import Career.server.web.dto.PostingDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +20,13 @@ public class PostingController {
     }
 
     @GetMapping("/main")
-    public ApiResponse<?> getPostingMain(){
+    public ApiResponse<PostingDto.MainResponseDto> getPostingMain(){
         return ApiResponse.onSuccess(postingService.getPostingMain());
+    }
+
+    @GetMapping("/act")
+    public ApiResponse<PostingDto.ActResponseDto> getPostingAct(@RequestBody PostingDto.ActRequestDto actRequestDto) {
+        return ApiResponse.onSuccess(postingService.getPostingAct(actRequestDto));
     }
 
 

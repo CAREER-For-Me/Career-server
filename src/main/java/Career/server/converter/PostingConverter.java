@@ -41,4 +41,10 @@ public class PostingConverter {
                 .build();
     }
 
+    public static PostingDto.ActResponseDto toActResponseDto(List<PostingDto.PreviewDto> previewDtoList) {
+        return PostingDto.ActResponseDto.builder()
+                .previewDtoList(previewDtoList)
+                .build();
+    }
+
 }
