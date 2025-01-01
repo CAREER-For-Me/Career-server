@@ -18,8 +18,10 @@ public class PostingService {
 
     private final PostingRepository postingRepository;
 
+    @Transactional
     public PostingDto.DetailResponseDto getPostingDetail(Long postingId) {
         Posting posting = postingRepository.findById(postingId).orElseThrow(()->new GeneralException(ErrorStatus._BAD_REQUEST));
+        posting.incrementViews();
         return PostingConverter.toDetailResponseDto(posting);
     }
 }

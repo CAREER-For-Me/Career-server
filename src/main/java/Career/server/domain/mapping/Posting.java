@@ -47,10 +47,14 @@ public class Posting extends BaseEntity {
 
     private String related;
 
-    private Integer views;
+    private Integer views = 0;
 
     private String content;
 
     private Boolean mark;
+
+    public void incrementViews(){
+        this.views++;
+    }
 
 }
