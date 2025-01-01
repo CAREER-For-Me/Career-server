@@ -3,6 +3,7 @@ package Career.server.domain.mapping;
 import Career.server.domain.common.BaseEntity;
 import Career.server.domain.enums.CorporateType;
 import Career.server.domain.enums.PostingGubun;
+import Career.server.domain.enums.PostingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,9 @@ public class Posting extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private PostingGubun postingGubun;
+
+    @Enumerated(EnumType.STRING)
+    private PostingStatus postingStatus;
 
     private String title;
 

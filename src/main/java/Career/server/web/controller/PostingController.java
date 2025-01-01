@@ -22,4 +22,10 @@ public class PostingController {
         return ApiResponse.onSuccess(postingService.getPostingDetail(postingId));
     }
 
+    @GetMapping("/main")
+    public ApiResponse<?> getPostingMain(){
+        return ApiResponse.onSuccess(postingService.getPostingMain());
+    }
+
+
 }

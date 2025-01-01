@@ -4,6 +4,7 @@ package Career.server.web.dto;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class PostingDto {
 
@@ -22,6 +23,21 @@ public class PostingDto {
         private String homepageUrl;
         private String imageUrl;
         private String content;
+    }
+
+    @Builder
+    public static class PreviewDto{
+        private Long postingId;
+        private String title;
+        private String corporateType;
+        private String imageUrl;
+        private LocalDate endDate;
+        private Integer views;
+    }
+
+    @Builder
+    public static class MainResponseDto{
+        private List<PreviewDto> previewDtoList;
     }
 
 }
