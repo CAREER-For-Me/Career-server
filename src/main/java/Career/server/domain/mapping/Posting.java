@@ -30,7 +30,6 @@ public class Posting extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CorporateType corporateType;
 
-    private String target;
 
     private LocalDate startDate;
 
@@ -42,15 +41,11 @@ public class Posting extends BaseEntity {
 
     private LocalDate endAct;
 
-    private String personnel;
-
-    private String boon;
-
     private String area;
 
     private String salary;
 
-    private String position;
+    private String related;
 
     private Integer views;
 
