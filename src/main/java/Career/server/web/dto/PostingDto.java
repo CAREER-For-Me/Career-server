@@ -2,6 +2,7 @@ package Career.server.web.dto;
 
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +38,18 @@ public class PostingDto {
 
     @Builder
     public static class MainResponseDto{
+        private List<PreviewDto> previewDtoList;
+    }
+
+    @Getter
+    public static class ActRequestDto{
+        private List<Long> fieldIds;
+        private Integer postingGubun;
+        private Integer pageNum;
+    }
+
+    @Builder
+    public static class ActResponseDto{
         private List<PreviewDto> previewDtoList;
     }
 
