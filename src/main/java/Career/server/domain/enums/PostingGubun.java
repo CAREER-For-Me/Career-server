@@ -1,5 +1,5 @@
 package Career.server.domain.enums;
 
 public enum PostingGubun {
-    ACTIVITY,CLUB,RECRU,LECTURE,CONTEST;
+    ACTIVITY,RECRU,CONTEST,CLUB,LECTURE;
 }
