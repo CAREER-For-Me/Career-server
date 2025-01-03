@@ -50,8 +50,8 @@ public class PostingDto {
         private List<Long> fieldIds;
 
         @NotBlank
-        @Min(value = 1, message = "Gubun 값은 1이상 5이하이어야 합니다.")
-        @Max(value = 5, message = "Gubun 값은 1이상 5이하이어야 합니다.")
+        @Min(value = 0, message = "Gubun 값은 0이상 4이하이어야 합니다.")
+        @Max(value = 4, message = "Gubun 값은 0이상 4이하이어야 합니다.")
         private Integer postingGubun;
 
         @NotBlank
