@@ -1,6 +1,9 @@
 package Career.server.web.dto;
 
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -43,8 +46,15 @@ public class PostingDto {
 
     @Getter
     public static class ActRequestDto{
+        @NotBlank
         private List<Long> fieldIds;
+
+        @NotBlank
+        @Min(value = 1, message = "Gubun 값은 1이상 5이하이어야 합니다.")
+        @Max(value = 5, message = "Gubun 값은 1이상 5이하이어야 합니다.")
         private Integer postingGubun;
+
+        @NotBlank
         private Integer pageNum;
     }
 
