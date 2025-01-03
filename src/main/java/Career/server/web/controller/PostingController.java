@@ -5,6 +5,7 @@ package Career.server.web.controller;
 import Career.server.apiPayload.ApiResponse;
 import Career.server.service.PostingService;
 import Career.server.web.dto.PostingDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class PostingController {
     }
 
     @GetMapping("/act")
-    public ApiResponse<PostingDto.ActResponseDto> getPostingAct(@RequestBody PostingDto.ActRequestDto actRequestDto) {
+    public ApiResponse<PostingDto.ActResponseDto> getPostingAct(@Valid @RequestBody PostingDto.ActRequestDto actRequestDto) {
         return ApiResponse.onSuccess(postingService.getPostingAct(actRequestDto));
     }
 
