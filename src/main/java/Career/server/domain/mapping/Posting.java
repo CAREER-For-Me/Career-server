@@ -21,7 +21,7 @@ public class Posting extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private PostingGubun postingGubun;
 
     @Enumerated(EnumType.STRING)
