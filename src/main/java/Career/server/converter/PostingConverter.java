@@ -47,4 +47,10 @@ public class PostingConverter {
                 .build();
     }
 
+    public static PostingDto.SearchResponseDto toSearchRequestDto(List<PostingDto.PreviewDto> previewDtoList) {
+        return PostingDto.SearchResponseDto.builder()
+                .previewDtoList(previewDtoList)
+                .build();
+    }
+
 }

@@ -63,4 +63,19 @@ public class PostingDto {
         private List<PreviewDto> previewDtoList;
     }
 
+    @Getter
+    public static class SearchRequestDto{
+
+        @NotBlank
+        private String keyword;
+
+        @NotBlank
+        private Integer pageNum;
+    }
+
+    @Builder
+    public static class SearchResponseDto{
+        private List<PreviewDto> previewDtoList;
+    }
+
 }

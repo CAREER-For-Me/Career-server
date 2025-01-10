@@ -44,4 +44,12 @@ public class PostingService {
         List<PostingDto.PreviewDto> previewDtoList = postingPage.stream().map(PostingConverter::toPreviewDto).toList();
         return PostingConverter.toActResponseDto(previewDtoList);
     }
+
+    public PostingDto.SearchResponseDto getPostingSearch(PostingDto.SearchRequestDto searchRequestDto) {
+        Pageable pageable = PageRequest.of(searchRequestDto.getPageNum(), 20);
+        String keyword = searchRequestDto.getKeyword();
+        Page<Posting> postingPage = postingRepository.findByTitleContainingOrderByViewsDesc(keyword, pageable);
+        List<PostingDto.PreviewDto> previewDtoList = postingPage.stream().map(PostingConverter::toPreviewDto).toList();
+        return PostingConverter.toSearchRequestDto(previewDtoList);
+    }
 }
