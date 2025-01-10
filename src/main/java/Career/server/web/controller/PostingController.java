@@ -35,5 +35,10 @@ public class PostingController {
         return ApiResponse.onSuccess(postingService.getPostingSearch(searchRequestDto));
     }
 
+    @PostMapping("/admin")
+    public ApiResponse<PostingDto.AdminResponseDto> getPostingAdmin(@Valid @RequestBody PostingDto.AdminRequestDto adminRequestDto) {
+        return ApiResponse.onSuccess(postingService.postPostingAdmin(adminRequestDto));
+    }
+
 
 }
