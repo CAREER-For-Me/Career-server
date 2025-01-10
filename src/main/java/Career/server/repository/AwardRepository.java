@@ -1,8 +1,12 @@
 package Career.server.repository;
 
-import org.springframework.stereotype.Repository;
+import Career.server.domain.mapping.Award;
+import Career.server.domain.mapping.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public class AwardRepository {
-    // 데이터베이스 연동 로직 추가
+public interface AwardRepository extends JpaRepository<Award, Long> {
+
+    @Query("select count(a) from Award a where a.user = :user")
+    Integer findAwardCount(User user);
 }

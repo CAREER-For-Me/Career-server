@@ -1,8 +1,10 @@
 package Career.server.repository;
 
-import org.springframework.stereotype.Repository;
+import Career.server.domain.mapping.Edu;
+import Career.server.domain.mapping.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class EduRepository {
-    // 데이터베이스와의 연동 로직 추가
+public interface EduRepository extends JpaRepository<Edu, Long> {
+
+    Edu findByUser(User user);
 }
