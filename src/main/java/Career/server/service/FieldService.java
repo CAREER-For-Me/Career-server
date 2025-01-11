@@ -9,6 +9,6 @@ public class FieldService {
 
     public FieldResponseDto saveFieldData(FieldRequestDto requestDto) {
         System.out.println("Received field data: " + requestDto.getFieldName());
-        return new FieldResponseDto("Field data saved successfully");
+        return new FieldResponseDto("Field data saved successfully for: " + requestDto.getFieldName());
     }
 }

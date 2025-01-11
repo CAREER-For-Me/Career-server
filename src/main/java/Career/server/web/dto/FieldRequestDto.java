@@ -1,15 +1,13 @@
 package Career.server.web.dto;
 
-import java.util.List;
-
 public class FieldRequestDto {
-    private List<String> fieldName;
+    private String fieldName;  // List에서 String으로 변경
 
-    public List<String> getFieldName() {
+    public String getFieldName() {
         return fieldName;
     }
 
-    public void setFieldName(List<String> fieldName) {
+    public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
     }
 }
