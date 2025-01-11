@@ -63,4 +63,42 @@ public class PostingDto {
         private List<PreviewDto> previewDtoList;
     }
 
+    @Getter
+    public static class SearchRequestDto{
+
+        @NotBlank
+        private String keyword;
+
+        @NotBlank
+        private Integer pageNum;
+    }
+
+    @Builder
+    public static class SearchResponseDto{
+        private List<PreviewDto> previewDtoList;
+    }
+
+    @Getter
+    public static class AdminRequestDto{
+        private List<Long> fieldIds;
+        private String title;
+        private String corporateType;
+        private String postingGubun;
+        private LocalDate startAct;
+        private LocalDate endAct;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private String area;
+        private String related;
+        private String salary;
+        private String homepageUrl;
+        private String imageUrl;
+        private String content;
+    }
+
+    @Builder
+    public static class AdminResponseDto{
+        private String message;
+    }
+
 }

@@ -5,6 +5,7 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -21,4 +22,5 @@ public class FieldPosting {
     @ManyToOne
     @JoinColumn(name = "posting_id")
     private Posting posting;
+
 }
