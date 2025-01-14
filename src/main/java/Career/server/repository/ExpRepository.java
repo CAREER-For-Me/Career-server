@@ -1,8 +1,12 @@
 package Career.server.repository;
 
-import org.springframework.stereotype.Repository;
+import Career.server.domain.mapping.Exp;
+import Career.server.domain.mapping.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public class ExpRepository {
-    // 데이터베이스 연동 로직 추가
+public interface ExpRepository extends JpaRepository<Exp, Long> {
+
+    @Query("select count(e) from Exp e where e.user = :user and e.expGubun = 'INTERN'")
+    Integer findInternCount(User user);
 }
