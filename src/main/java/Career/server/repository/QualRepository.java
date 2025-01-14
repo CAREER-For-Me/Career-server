@@ -1,5 +1,6 @@
 package Career.server.repository;
 
+
 import Career.server.domain.mapping.Qual;
 import Career.server.domain.mapping.User;
 import org.springframework.data.jpa.repository.JpaRepository;

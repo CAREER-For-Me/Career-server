@@ -1,5 +1,6 @@
 package Career.server.repository;
 
+
 import Career.server.domain.enums.Type;
 import Career.server.domain.mapping.Lang;
 import Career.server.domain.mapping.User;
@@ -13,4 +14,5 @@ public interface LangRepository extends JpaRepository<Lang, Long> {
 
     @Query("select l.degree from Lang l where l.user = :user and l.type = 'TOS'")
     String findTosLevel(User user);
+
 }
