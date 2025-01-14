@@ -17,3 +17,52 @@ spring:
         hbm2ddl:
           auto: update
         default_batch_fetch_size: 1000
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pageth88@gmail.com
+    password: vrxt nytr lkgr xncy
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 9356b782d19344cb4b12702c057521bb
+            client-secret: eBQWjYONTsdsl1sAqsqXtE4gAPxK13U3
+            redirect-uri: "{baseUrl}/oauth2/callback/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope: profile_nickname
+          naver:
+            client-id: o_Nul_VekFFmIVgczU90
+            client-secret: YKtjVh1vjL
+            redirect-uri: "{baseUrl}/oauth2/callback/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope: email
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+          naver:
+             authorization-uri: https://nid.naver.com/oauth2.0/authorize
+             token-uri: https://nid.naver.com/oauth2.0/token
+             user-info-uri: https://openapi.naver.com/oauth2.0/v1/nid/me
+             user-name-attribute: response
+
+secret-key: ThisStatementIsJwtSecretKeyDoNotUseThisStatement
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    kakao.login: DEBUG
