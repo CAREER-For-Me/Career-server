@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                 .httpBasic(HttpBasicConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(request -> request.requestMatchers("/", "/api/v1/auth/**", "/oauth/**", "/oauth2/**", "https://nid.naver.com/**","https://openapi.naver.com/**").permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/", "api/v1/**","/api/v1/auth/**", "/oauth/**", "/oauth2/**", "https://nid.naver.com/**","https://openapi.naver.com/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
