@@ -28,7 +28,7 @@ spring:
             user-info-uri: https://openapi.naver.com/oauth2.0/v1/nid/me
             user-name-attribute: response
   datasource:
-    url: jdbc:mysql://localhost:3306/career
+    url: jdbc:mysql://careertestdb.cl0w280swgpy.ap-northeast-2.rds.amazonaws.com:3306/career_for_me
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver

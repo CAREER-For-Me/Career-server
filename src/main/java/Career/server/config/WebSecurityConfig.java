@@ -50,7 +50,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(request -> request.requestMatchers("/", "api/v1/**","/api/v1/auth/**", "/oauth/**", "/oauth2/**", "https://nid.naver.com/**","https://openapi.naver.com/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
                         .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
