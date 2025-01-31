@@ -1,4 +1,4 @@
-package Career.server.apiPayload.authcode;
+package Career.server.apiPayload.handler;
 
 import Career.server.domain.mapping.CustomOAuth2User;
 import Career.server.provider.JwtProvider;
@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String userId = oAuth2User.getName();
         String token = jwtProvider.create(userId);
 
-        response.sendRedirect("http://localhost:3000/auth/oauth-response/" + token + "/3600");
+        response.sendRedirect("http://localhost:3000/auth/oauth-response/");
     }
 
 }

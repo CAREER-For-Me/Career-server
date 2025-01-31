@@ -1,6 +1,8 @@
 package Career.server.jwt;
 
 
+import Career.server.apiPayload.code.status.ErrorStatus;
+import Career.server.apiPayload.exception.GeneralException;
 import Career.server.domain.mapping.User;
 import Career.server.provider.JwtProvider;
 import Career.server.repository.UserRepository;
@@ -45,13 +47,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            String userId = jwtProvider.validate(token);
-            if(userId==null) {
+            String userIdString = jwtProvider.validate(token);
+            if(userIdString==null) {
                 filterChain.doFilter(request,response);
                 return;
             }
+            Long userId = Long.parseLong(userIdString);
 
-            User user = userRepository.findByMemberId(userId);
+            User user = userRepository.findById(userId).orElseThrow(() -> new GeneralException(ErrorStatus._NON_EXIST_EMAIL));
             String role = user.getRole();
 
             List<GrantedAuthority> authorities = new ArrayList<>();
