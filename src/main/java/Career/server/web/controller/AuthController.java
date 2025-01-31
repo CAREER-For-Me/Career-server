@@ -1,6 +1,5 @@
 package Career.server.web.controller;
 
-import Career.server.apiPayload.ApiResponse;
 import Career.server.service.AuthService;
 import Career.server.web.dto.request.*;
 import Career.server.web.dto.response.*;
@@ -23,29 +22,46 @@ public class AuthController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PostMapping("/certification/email")
-    public ApiResponse<?> passwordChange(
+    public ResponseEntity<? super EmailCertificationResDto> emailCertification(
             @RequestBody @Valid EmailCertificationReqDto request
     ) {
-        ApiResponse<?> response = authService.passwordCertification(request);
+        ResponseEntity<? super EmailCertificationResDto> response = authService.emailCertification(request);
         log.debug(" emailCertification's request: " + request + "emailCertification's response: " + response);
         return response;
     }
 
+    @PostMapping("/certification/check")
+    public ResponseEntity<? super CheckCertificationResDto> checkCertification (
+            @RequestBody @Valid CheckCertificationReqDto request
+    ) {
+        ResponseEntity<? super CheckCertificationResDto> response = authService.checkCertification(request);
+        log.debug(" checkCertification's request: " + request + "checkCertification's response: " + response);
+        return response;
+    }
+
+    @PostMapping("/certification/id")
+    public ResponseEntity<? super IdCheckResDto> checkId (
+            @RequestBody @Valid IdCheckReqDto request
+    ) {
+        ResponseEntity<? super IdCheckResDto> response = authService.idCheck(request);
+        log.debug(" checkId's request: " + request + "checkId's response: " + response);
+        return response;
+    }
 
     @PostMapping("/signup")
-    public ApiResponse<?> signUp(
+    public ResponseEntity<? super SignUpResDto> signUp(
             @RequestBody @Valid SignUpReqDto request
     ) {
-        ApiResponse<?> response = authService.signUp(request);
+        ResponseEntity<? super SignUpResDto> response = authService.signUp(request);
         log.debug(" signUp's request: " + request + "signUp's response: " + response);
         return response;
     }
 
     @PostMapping("/login")
-    public ApiResponse<?> logIn(
+    public ResponseEntity<? super LoginResDto> logIn(
             @RequestBody @Valid LoginReqDto request
     ) {
-        ApiResponse<?> response = authService.login(request);
+        ResponseEntity<? super LoginResDto> response = authService.login(request);
         log.debug(" logIn's request: " + request + "logIn's response: " + response);
         return response;
     }
