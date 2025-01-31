@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
@@ -24,8 +24,6 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    private String memberId;
-
     private String email;
 
     private String nickname;
@@ -33,6 +31,8 @@ public class User extends BaseEntity {
     private String username;
 
     private String password;
+
+    private String birth;
 
     private String phoneNum;
 
@@ -52,19 +52,22 @@ public class User extends BaseEntity {
     private UserRole userRole;
 
     public User(SignUpReqDto dto) {
-        this.memberId = dto.getId();
         this.password = dto.getPassword();
         this.email = dto.getEmail();
         this.type = "NotYet";
         this.role = "ROLE_USER";
     }
 
-    public User(String userId, String email, String type) {
-        this.memberId = userId;
+    public User(String email, String type) {
         this.password = "NotYet";
         this.email = email;
         this.type = type;
         this.role = "ROLE_USER";
+    }
+
+    public User updatePassword(String newPassword) {
+        this.password = newPassword;
+        return this;
     }
 
 }

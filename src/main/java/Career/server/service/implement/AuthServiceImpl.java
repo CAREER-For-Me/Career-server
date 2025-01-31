@@ -1,7 +1,13 @@
 package Career.server.service.implement;
 
 
-import Career.server.apiPayload.authcode.CertificationNumber;
+import Career.server.apiPayload.ApiResponse;
+import Career.server.apiPayload.code.BaseCode;
+import Career.server.apiPayload.code.status.ErrorStatus;
+import Career.server.apiPayload.code.status.SuccessStatus;
+import Career.server.apiPayload.handler.AuthHandler;
+import Career.server.apiPayload.handler.CertificationNumber;
+import Career.server.converter.auth.UserConverter;
 import Career.server.domain.mapping.Certification;
 import Career.server.domain.mapping.User;
 import Career.server.provider.EmailProvider;
@@ -9,7 +15,6 @@ import Career.server.provider.JwtProvider;
 import Career.server.repository.CertificationRepository;
 import Career.server.repository.UserRepository;
 import Career.server.service.AuthService;
-import Career.server.web.dto.BaseResponseDto;
 import Career.server.web.dto.request.*;
 import Career.server.web.dto.response.*;
 import lombok.RequiredArgsConstructor;
@@ -28,131 +33,82 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     @Override
-    public ResponseEntity<? super EmailCertificationResDto> emailCertification(EmailCertificationReqDto dto) {
+    public ApiResponse<?> passwordCertification(EmailCertificationReqDto dto) {
 
         try {
-            String userId = dto.getId();
-            String email = dto.getEmail();
+            User user = userRepository.findByEmail(dto.getEmail());
 
-            boolean isExistId = userRepository.existsByMemberId(userId);
-            if(isExistId) return EmailCertificationResDto.duplicateEmail();
+            boolean isExistEmail = userRepository.existsByEmail(user.getEmail());
+            if(!isExistEmail) return ApiResponse.onFailure(ErrorStatus._NON_EXIST_EMAIL.getCode(), ErrorStatus._NON_EXIST_EMAIL.getMessage(), dto);
 
             String certificationNumber = CertificationNumber.getCertificationNumber();
 
-            boolean isSuccess =emailProvider.sendCertificationMail(email, certificationNumber);
-            if(!isSuccess) return EmailCertificationResDto.mailSendFail();
+            boolean isSuccess =emailProvider.sendCertificationMail(user.getEmail(), certificationNumber);
+            if(!isSuccess) return ApiResponse.onFailure(ErrorStatus._MAILSENDER_ERROR.getCode(), ErrorStatus._MAILSENDER_ERROR.getMessage(), "다시 해 보시오");
 
-            Certification certification = new Certification(userId, email, certificationNumber);
-            certificationRepository.save(certification);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return BaseResponseDto.databaseError();
-        }
-
-        return EmailCertificationResDto.success();
-    }
-
-    @Override
-    public ResponseEntity<? super CheckCertificationResDto> checkCertification(CheckCertificationReqDto dto) {
-
-        try {
-
-            String userId = dto.getId();
-            String email = dto.getEmail();
-            String certificationNumber = dto.getCertificationNumber();
-
-            Certification cert = certificationRepository.findByUserId(userId);
-            if(cert == null) return CheckCertificationResDto.certificationFail();
-
-            boolean isCorrect = cert.getEmail().equals(email)&&cert.getCertificationNumber().equals(certificationNumber);
-            if(!isCorrect) return CheckCertificationResDto.certificationFail();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return BaseResponseDto.databaseError();
-        }
-
-        return CheckCertificationResDto.success();
-    }
-
-    @Override
-    public ResponseEntity<? super IdCheckResDto> idCheck(IdCheckReqDto dto) {
-
-        try {
-
-            String userId = dto.getId();
-            boolean isExistId = userRepository.existsByMemberId(userId);
-            if(isExistId) return IdCheckResDto.duplicateId();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return BaseResponseDto.databaseError();
-        }
-
-        return IdCheckResDto.success();
-    }
-
-    @Override
-    public ResponseEntity<? super SignUpResDto> signUp(SignUpReqDto dto) {
-
-        try {
-
-            String userId = dto.getId();
-            boolean isExistId = userRepository.existsByMemberId(userId);
-            if(isExistId) return SignUpResDto.duplicateId();
-
-            String email = dto.getEmail();
-            boolean isExistEmail = userRepository.existsByEmail(email);
-            if(isExistEmail) return SignUpResDto.duplicateId();
-
-            String certificationNum = dto.getCertificationNumber();
-
-            Certification cert = certificationRepository.findByUserId(userId);
-            boolean isCorrect = cert.getEmail().equals(email)&&cert.getCertificationNumber().equals(certificationNum);
-            if(!isCorrect) return SignUpResDto.certificationFail();
-
-            String password = dto.getPassword();
-            String encodedPassword = passwordEncoder.encode(password);
-            dto.setPassword(encodedPassword);
-
-            User user = new User(dto);
+            String encodedPassword = passwordEncoder.encode(certificationNumber);
+            user.updatePassword(encodedPassword);
             userRepository.save(user);
 
-            certificationRepository.deleteByUserId(userId);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return BaseResponseDto.databaseError();
+            return ApiResponse.onFailure(ErrorStatus._INTERNAL_SERVER_ERROR.getCode(),ErrorStatus._INTERNAL_SERVER_ERROR.getMessage(), dto);
         }
 
-        return SignUpResDto.success();
+        return ApiResponse.onSuccess(SuccessStatus._OK);
+    }
+
+
+
+    @Override
+    public ApiResponse<?> signUp(SignUpReqDto dto){
+        try {
+
+            boolean isExistEmail = userRepository.existsByEmail(dto.getEmail());
+            if(isExistEmail) return ApiResponse.onFailure(ErrorStatus._DUPLICATED_EMAIL.getCode(), ErrorStatus._DUPLICATED_EMAIL.getMessage(), dto);
+
+            String encodedPassword = passwordEncoder.encode(dto.getPassword());
+            dto.setPassword(encodedPassword);
+
+            User user = UserConverter.signUpConverter(dto);
+
+            userRepository.save(user);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.onFailure(ErrorStatus._INTERNAL_SERVER_ERROR.getCode(),ErrorStatus._INTERNAL_SERVER_ERROR.getMessage(), dto);
+        }
+
+        return ApiResponse.onSuccess(SuccessStatus._OK);
     }
 
     @Override
-    public ResponseEntity<? super LoginResDto> login(LoginReqDto dto) {
+    public ApiResponse<?> login(LoginReqDto dto) {
 
         String token = null;
         try {
-            String userId = dto.getId();
-            User user = userRepository.findByMemberId(userId);
-            if(user == null) return LoginResDto.signInFail(token);
+            String email = dto.getEmail();
+            User user = userRepository.findByEmail(email);
+            if(user == null) return ApiResponse.onFailure(ErrorStatus._NON_EXIST_EMAIL.getCode(),ErrorStatus._NON_EXIST_EMAIL.getMessage(),dto);
+
 
             String password = dto.getPassword();
             String encodedPassword = user.getPassword();
             boolean isCorrect = passwordEncoder.matches(password, encodedPassword);
-            if(!isCorrect) return LoginResDto.signInFail(token);
+            if(!isCorrect) return ApiResponse.onFailure(ErrorStatus._BAD_PASSWORD.getCode(), ErrorStatus._BAD_PASSWORD.getMessage(), token);
 
-            token = jwtProvider.create(userId);
+            token = jwtProvider.create(String.valueOf(user.getId()));
 
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
-            return BaseResponseDto.databaseError();
+            return ApiResponse.onFailure(ErrorStatus._INTERNAL_SERVER_ERROR.getCode(),ErrorStatus._INTERNAL_SERVER_ERROR.getMessage(), dto);
         }
-
-        return LoginResDto.success(token);
+        System.out.println(token);
+        return ApiResponse.onSuccess(SuccessStatus._OK);
     }
+
+
 }
