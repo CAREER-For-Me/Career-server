@@ -1,0 +1,14 @@
+name: CAREER_FOR_ME Server Github Actions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  My-Deploy-Job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: CAREER_FOR_ME_SERVER
+        run: echo "CareerForMe"
