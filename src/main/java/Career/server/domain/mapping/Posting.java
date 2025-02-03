@@ -51,6 +51,7 @@ public class Posting extends BaseEntity {
 
     private String related;
 
+    @Builder.Default
     private Integer views = 0;
 
     private String content;

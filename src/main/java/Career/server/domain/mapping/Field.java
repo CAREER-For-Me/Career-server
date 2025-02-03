@@ -9,11 +9,12 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table(name = "field")
 public class Field {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Field_id")
+    //@Column(name = "field_id")
     private Long id;
 
     private String fieldName;
