@@ -4,11 +4,10 @@ import Career.server.domain.mapping.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+    User findByMemberId(String memberId);
+    Boolean existsByMemberId(String memberId);
     Boolean existsByEmail(String email);
-
+    //User
 }
