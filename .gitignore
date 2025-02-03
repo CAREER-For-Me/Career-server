@@ -39,4 +39,4 @@ out/
 ## 추가
 src/main/resources/application.yml
 
-application-prod.yml
+application.yml
