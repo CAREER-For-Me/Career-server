@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: SSH로 EC2 접속
         uses: appleboy/ssh-action@v1.2.0
-        env:
-          APPLICATION_PROPERTIES: ${{ secrets.APPLICATION_PROPERTIES }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
@@ -24,7 +22,7 @@ jobs:
             cd /home/ubuntu/Career-server
             rm -rf src/main/resources/application.yml
             git pull origin main
-            echo "$APPLICATION_PROPERTIES" > src/main/java/resources/application.yml
+            echo "${{ secrets.APPLICATION_PROPERTIES }}" | base64 --decode > src/main/resources/application.yml
             ./gradlew clean build
             sudo fuser -k -n tcp 8080 || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
